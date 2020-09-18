@@ -1,6 +1,5 @@
 import os
 import sys
-
 import pafy
 from moviepy.editor import * 
 
@@ -16,7 +15,6 @@ def downloadVid(url):
     except Exception as e:
         print(e)
 
-
 def mp4_mp3(file_name):
     try:
         # removes all illegal filename characters 
@@ -29,10 +27,13 @@ def mp4_mp3(file_name):
         aclip = vclip.audio
         aclip.write_audiofile(MP3_FILE)
 
-        print('Your files downloaded at {}'.format(os.getcwd()))
-
         vclip.close()
         aclip.close()
+
+        print('Your files downloaded at {}'.format(os.getcwd()))
+
+        return MP4_FILE
+
     except Exception as e:
         print(e)
 
@@ -44,11 +45,20 @@ def main(args=args):
     if(args == []):
         print("""
         Invalid! enter a youtube URL
-        e.g: py ytmp.py www.youtube.com/watch?v=qwerty""")
+        e.g# py ytmp.py www.youtube.com/watch?v=qwerty""")
 
     else:
-        mp4_mp3(downloadVid(args[0]))
-
+        try:
+            if(args[0] == '-a'):
+                print('downloading only audio from {}'.format(args[1]))
+                os.unlink(mp4_mp3(downloadVid(args[1])))
+            elif(args[0] == '-v'):
+                print('downloading only video from {}'.format(args[1]))
+                downloadVid(args[1])
+            else:
+                print('downloading both audio video')
+                mp4_mp3(downloadVid(args[1]))
+        except:
+            pass
 main()
-
 ## EOF
