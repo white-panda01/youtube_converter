@@ -57,7 +57,7 @@ def main(args=args):
                 downloadVid(args[1])
             else:
                 print('downloading both audio video')
-                mp4_mp3(downloadVid(args[1]))
+                mp4_mp3(downloadVid(args[0]))
         except:
             pass
 main()
